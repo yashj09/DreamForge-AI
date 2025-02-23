@@ -17,6 +17,8 @@ Smart Contract Address: [0x3121f213e88cf5b2b02e330c98a92a19ee81a3d6](https://sep
 
 Smart Contract Code: [Github](https://github.com/yashj09/ERC-721-NFT-)
 
+AI Model Code: [Github](https://github.com/yashj09/AI-Image-Generator)
+
 ## Demo
 
 https://github.com/user-attachments/assets/f0fb082a-e7bf-48cc-a7bf-2ea7594159ea
