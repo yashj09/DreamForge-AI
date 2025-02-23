@@ -19,7 +19,7 @@ Smart Contract Code: [Github](https://github.com/yashj09/ERC-721-NFT-)
 
 ## Demo
 
-
+https://github.com/user-attachments/assets/f0fb082a-e7bf-48cc-a7bf-2ea7594159ea
 
 ## **Tech Stack**  
 Next.js, TypeScript, Alchemy API, Pinata, IPFS, TailwindCSS  
