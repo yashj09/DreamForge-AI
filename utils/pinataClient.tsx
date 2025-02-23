@@ -4,27 +4,27 @@ const pinataApiKey = "305ee09c0aed441bca0c";
 const pinataSecret =
   "573514ed2ca102fcfba5f63bf3268b7a860c65eccc0923c9eb773fd1f8142377";
 
-export const uploadToIPFS = async (imageBase64: string) => {
-  // Convert base64 to Blob
-  const blob = new Blob([Buffer.from(imageBase64, "base64")], {
-    type: "image/png",
-  });
+export const uploadToIPFS = async (imageBlob: Blob) => {
   const formData = new FormData();
-  formData.append("file", blob, "ai-nft.png");
+  formData.append("file", imageBlob, "ai-nft.png");
 
-  // Upload image to Pinata
-  const response = await axios.post(
-    "https://api.pinata.cloud/pinning/pinFileToIPFS",
-    formData,
-    {
-      headers: {
-        pinata_api_key: pinataApiKey,
-        pinata_secret_api_key: pinataSecret,
-      },
-    }
-  );
+  try {
+    const response = await axios.post(
+      "https://api.pinata.cloud/pinning/pinFileToIPFS",
+      formData,
+      {
+        headers: {
+          pinata_api_key: pinataApiKey,
+          pinata_secret_api_key: pinataSecret,
+        },
+      }
+    );
 
-  return `ipfs://${response.data.IpfsHash}`;
+    return `ipfs://${response.data.IpfsHash}`;
+  } catch (error) {
+    console.error("Error uploading image to IPFS:", error);
+    throw new Error("Failed to upload image to IPFS");
+  }
 };
 
 export const uploadMetadataToIPFS = async (

@@ -2,6 +2,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Image from "next/image";
+import { ethers } from "ethers";
+import contractabi from "../utils/contractabi.json";
+import { uploadToIPFS, uploadMetadataToIPFS } from "../utils/pinataClient";
+
+const CONTRACT_ADDRESS = "0x3121f213e88cf5b2b02e330c98a92a19ee81a3d6";
 
 const Aigenerator = () => {
   const [imageprompt, setImageprompt] = useState("");
@@ -13,7 +18,9 @@ const Aigenerator = () => {
     if (!imageprompt) return;
     setIsGenerating(true);
     setError("");
+
     try {
+      // Fetch AI-generated image
       const response = await axios.get(
         `https://honoimagegenerator.yashj8858.workers.dev/`,
         {
@@ -22,10 +29,36 @@ const Aigenerator = () => {
         }
       );
 
-      const imageUrl = URL.createObjectURL(response.data);
+      const imageBlob = response.data; // The actual Blob object
+      const imageUrl = URL.createObjectURL(imageBlob);
       setGeneratedImage(imageUrl);
+
+      // Upload Image to IPFS
+      const ipfsImageUrl = await uploadToIPFS(imageBlob); // Pass Blob, not the URL
+      console.log("Uploaded Image to IPFS:", ipfsImageUrl);
+
+      // Upload Metadata to IPFS
+      const metadataUrl = await uploadMetadataToIPFS(ipfsImageUrl, imageprompt);
+      console.log("Uploaded Metadata to IPFS:", metadataUrl);
+
+      // Mint NFT on Blockchain
+      if (!window.ethereum) throw new Error("MetaMask not found");
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+
+      // Contract Interaction
+      const contract = new ethers.Contract(
+        CONTRACT_ADDRESS,
+        contractabi.abi,
+        signer
+      );
+
+      const tx = await contract.mintNft(metadataUrl);
+      await tx.wait();
+
+      alert("NFT Minted Successfully!");
     } catch (err) {
-      console.error("Error generating image:", err);
+      console.error("Error:", err);
       setError("Failed to generate image. Please try again.");
     } finally {
       setIsGenerating(false);
