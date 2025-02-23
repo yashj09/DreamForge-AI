@@ -13,7 +13,7 @@ const Aigenerator = () => {
   const [generatedimage, setGeneratedImage] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState("");
-
+  const [isminting, setIsMinting] = useState(false);
   const generateImage = async () => {
     if (!imageprompt) return;
     setIsGenerating(true);
@@ -32,7 +32,9 @@ const Aigenerator = () => {
       const imageBlob = response.data; // The actual Blob object
       const imageUrl = URL.createObjectURL(imageBlob);
       setGeneratedImage(imageUrl);
+      setIsGenerating(false);
 
+      setIsMinting(true);
       // Upload Image to IPFS
       const ipfsImageUrl = await uploadToIPFS(imageBlob); // Pass Blob, not the URL
       console.log("Uploaded Image to IPFS:", ipfsImageUrl);
@@ -57,12 +59,14 @@ const Aigenerator = () => {
       await tx.wait();
 
       alert("NFT Minted Successfully!");
+      setIsMinting(false);
     } catch (err) {
       console.error("Error:", err);
       setError("Failed to generate image. Please try again.");
     } finally {
-      setIsGenerating(false);
       setImageprompt("");
+      setIsMinting(false);
+      setIsGenerating(false);
     }
   };
 
@@ -111,7 +115,11 @@ const Aigenerator = () => {
             }`}
             disabled={isGenerating || !imageprompt}
           >
-            {isGenerating ? "Generating Image..." : "Generate Image"}
+            {isGenerating
+              ? "Generating Image..."
+              : isminting
+              ? "Minting..."
+              : "Generate Image"}
           </button>
 
           {/* Regenerate Button */}
