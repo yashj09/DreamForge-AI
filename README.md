@@ -9,6 +9,18 @@ This project enables users to generate AI-powered NFTs and store them on IPFS vi
 - Fetch all minted NFTs from a smart contract  
 - Display NFTs in a responsive **3-column grid**  
 
+## Links:
+
+Live Demo: [https://dreamforgeai.yashj.me/](https://dreamforgeai.yashj.me/)
+
+Smart Contract Address: [0x3121f213e88cf5b2b02e330c98a92a19ee81a3d6](https://sepolia.etherscan.io/address/0x3121f213e88cf5b2b02e330c98a92a19ee81a3d6)
+
+Smart Contract Code: [Github](https://github.com/yashj09/ERC-721-NFT-)
+
+## Demo
+
+
+
 ## **Tech Stack**  
 Next.js, TypeScript, Alchemy API, Pinata, IPFS, TailwindCSS  
 
