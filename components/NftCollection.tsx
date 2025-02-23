@@ -1,5 +1,7 @@
-import Image from "next/image";
+import { client } from "@/app/client";
+// import Image from "next/image";
 import { useEffect, useState } from "react";
+import { MediaRenderer } from "thirdweb/react";
 
 interface NFT {
   id: { tokenId: string };
@@ -25,19 +27,22 @@ const NFTGrid = () => {
 
     fetchNFTs();
   }, [API_URL]);
-
+  const formatIPFSUrl = (url: string) => {
+    return url.startsWith("ipfs://")
+      ? url.replace("ipfs://", "https://dweb.link/ipfs/")
+      : url;
+  };
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Minted NFTs</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {nfts.map((nft, index) => (
           <div key={index} className="border rounded-lg p-2 shadow-lg">
-            <Image
-              width={80}
-              height={80}
-              src={nft.media[0]?.gateway || "/placeholder.jpg"}
+            <MediaRenderer
+              client={client}
+              src={formatIPFSUrl(nft.media[0]?.gateway || "/placeholder.jpg")}
               alt={nft.title}
-              className="w-full h-60 object-cover rounded-lg"
+              className="w-full object-cover rounded-lg"
             />
             <h3 className="text-lg font-semibold mt-2">{nft.title}</h3>
             <p className="text-sm text-gray-600">{nft.description}</p>
