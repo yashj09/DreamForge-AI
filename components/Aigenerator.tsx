@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ethers } from "ethers";
 import contractabi from "../utils/contractabi.json";
 import { uploadToIPFS, uploadMetadataToIPFS } from "../utils/pinataClient";
+import NFTCollection from "./NftCollection";
 
 const CONTRACT_ADDRESS = "0x3121f213e88cf5b2b02e330c98a92a19ee81a3d6";
 
@@ -133,6 +134,7 @@ const Aigenerator = () => {
           )}
         </div>
       </div>
+      <NFTCollection />
     </div>
   );
 };
