@@ -1,5 +1,4 @@
 import { client } from "@/app/client";
-// import Image from "next/image";
 import { useEffect, useState } from "react";
 import { MediaRenderer } from "thirdweb/react";
 
@@ -40,7 +39,7 @@ const NFTGrid = () => {
           <div key={index} className="border rounded-lg p-2 shadow-lg">
             <MediaRenderer
               client={client}
-              src={formatIPFSUrl(nft.media[0]?.gateway || "/placeholder.jpg")}
+              src={formatIPFSUrl(nft.media[0]?.gateway)}
               alt={nft.title}
               className="w-full object-cover rounded-lg"
             />
