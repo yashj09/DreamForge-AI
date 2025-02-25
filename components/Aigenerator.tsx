@@ -134,7 +134,9 @@ const Aigenerator = () => {
           )}
         </div>
       </div>
-      <NFTCollection />
+      <div className="md:w-[60%] w-full">
+        <NFTCollection />
+      </div>
     </div>
   );
 };
