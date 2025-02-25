@@ -64,7 +64,7 @@ const NFTGrid = () => {
       <h2 className="text-2xl font-bold mb-6 text-center">🖼 Minted NFTs</h2>
 
       {loading && (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {Array.from({ length: 8 }).map((_, i) => (
             <div
               key={i}
@@ -76,7 +76,7 @@ const NFTGrid = () => {
 
       {error && <p className="text-red-500 text-center">{error}</p>}
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {nfts.map((nft) => (
           <div
             key={nft.tokenId}
